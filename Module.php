@@ -33,7 +33,7 @@ class Module implements AutoloaderProviderInterface, ViewHelperProviderInterface
     public function getViewHelperConfig()
     {
         return [
-            'factories' => [
+            'invokables' => [
                 'emailObfuscator' => View\Helper\EmailObfuscator::class,
             ],
         ];

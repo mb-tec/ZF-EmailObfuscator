@@ -41,15 +41,17 @@ class EmailObfuscator extends AbstractHelper
         $aNeverEncode = ['.', '@', '+']; // Don't encode those as not fully supported by IE & Chrome
 
         $sUrlEncodedEmail = '';
-        for ($i = 0; $i < strlen($sEmail); $i++) {
+        for ($i = 0; $i <= strlen($sEmail); ++$i) {
+            $sChar = mb_substr($sEmail, $i, 1);
+
             // Encode 25% of characters
-            if (!in_array($sEmail[$i], $aNeverEncode) && mt_rand(1, 100) < 25) {
-                $sCharCode = ord($aNeverEncode[$i]);
+            if (!in_array($sChar, $aNeverEncode) && mt_rand(1, 100) < 25) {
+                $sCharCode = ord($sChar);
                 $sUrlEncodedEmail .= '%';
                 $sUrlEncodedEmail .= dechex(($sCharCode >> 4) & 0xF);
                 $sUrlEncodedEmail .= dechex($sCharCode & 0xF);
             } else {
-                $sUrlEncodedEmail .= $sEmail[$i];
+                $sUrlEncodedEmail .= $sChar;
             }
         }
 
